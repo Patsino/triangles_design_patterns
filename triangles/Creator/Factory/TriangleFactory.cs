@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,6 +39,10 @@ namespace triangles.Creator.Factory
         public List<Triangle> CreateTriangles(string filePath)
         {
             var lines = _parser.ReadFile(filePath);
+            if (lines.Length == 0)
+            {
+                throw new ArgumentException("empty file");
+            }
 
             foreach (var line in lines)
             {
@@ -49,7 +54,15 @@ namespace triangles.Creator.Factory
                     var p3 = new Point(double.Parse(parts[4]), double.Parse(parts[5]));
 
                     var triangle = CreateTriangle(p1, p2, p3);
-                    _repository.AddTriangle(triangle);
+                    if (_validator.IsValidTrianle(triangle))
+                    {
+                        _repository.AddTriangle(triangle);
+                        Log.Information($"Created {triangle}");
+                    }
+                    else
+                    {
+                        Log.Error($"invalid triangle {triangle}");
+                    }
                 }
             }
 

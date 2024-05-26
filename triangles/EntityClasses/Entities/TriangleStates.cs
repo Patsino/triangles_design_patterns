@@ -11,9 +11,9 @@ namespace triangles.EntityClasses.Entities
     {
         Invalid = 1,
         Right = 2,
-        Isosceles = 4,
-        Equilateral = 8,
-        Acute = 16,
-        Obtuse = 32
+        Isosceles = 4, //ravnobdr
+        Equilateral = 8, //ravnostr
+        Acute = 16, //ostrii
+        Obtuse = 32 //tupoi
     }
 }

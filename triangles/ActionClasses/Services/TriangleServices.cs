@@ -27,6 +27,16 @@ namespace triangles.ActionClasses.Services
             return Math.Sqrt(semiPerimeter * (semiPerimeter - ab) * (semiPerimeter - bc) * (semiPerimeter - ca));
         }
 
+        public static double CalculateArea(Triangle triangle)
+        {
+            double ab = Distance(triangle._point1, triangle._point2);
+            double bc = Distance(triangle._point2, triangle._point3);
+            double ca = Distance(triangle._point3, triangle._point2);
+
+            double semiPerimeter = (ab + bc + ca) / 2;
+            return Math.Sqrt(semiPerimeter * (semiPerimeter - ab) * (semiPerimeter - bc) * (semiPerimeter - ca));
+        }
+
         public static double CalculatePerimeter(Point a, Point b, Point c)
         {
             double ab = Distance(a, b);
@@ -36,6 +46,14 @@ namespace triangles.ActionClasses.Services
             return ab + bc + ca;
         }
 
+        public static double CalculatePerimeter(Triangle triangle)
+        {
+            double ab = Distance(triangle._point1, triangle._point2);
+            double bc = Distance(triangle._point2, triangle._point3);
+            double ca = Distance(triangle._point3, triangle._point2);
+
+            return ab + bc + ca;
+        }
         public static TriangleType DetermineTriangleType(Point a, Point b, Point c)
         {
             double ab = Distance(a, b);
@@ -86,7 +104,7 @@ namespace triangles.ActionClasses.Services
             return Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2));
         }
 
-        private static bool IsValidTriangle(Point a, Point b, Point c) => CalculateArea(a, b, c) <= double.Epsilon;
+        private static bool IsValidTriangle(Point a, Point b, Point c) => CalculateArea(a, b, c) > double.Epsilon;
 
         private static bool IsRightTriangle(double ab, double bc, double ca)
         {
