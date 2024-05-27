@@ -11,7 +11,22 @@ namespace triangles.Warehouse
     public class Warehouse
     {
         private static Warehouse _instance;
-        public static Warehouse Instance => _instance ??= new Warehouse();
+        private static readonly object _lock = new object();
+
+        public static Warehouse Instance
+        {
+            get
+            {
+                lock (_lock)
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new Warehouse();
+                    }
+                    return _instance;
+                }
+            }
+        }
 
         private Dictionary<Triangle, (double Perimeter, double Square)> triangleMetrics = new Dictionary<Triangle, (double, double)>();
 
